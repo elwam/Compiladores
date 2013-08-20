@@ -12,24 +12,35 @@ import javax.swing.JOptionPane;
  * @author Administrador
  */
 public class Lexico {
+    
+    String salidas="";
 
     TablaContracciones tabla = new TablaContracciones();
+
+    public String getSalidas() {
+        return salidas;
+    }
+    
+    
 
     boolean validarCadena(String cadena) {
         String vocalesTilde = "áéíóú";
         boolean error = false;
         if (cadena.length() == 0) {
-            System.out.println("La cadena esta vacia!!!");
+            //System.out.println("La cadena esta vacia!!!");
+            salidas+="La cadena esta vacia!!!";
             error = true;
         } else {
             for (int i = 0; i < cadena.length(); i++) {
                 if (!Character.isLetter(cadena.charAt(i)) && !Character.isSpace(cadena.charAt(i))) {
-                    System.out.println("El caracter: " + cadena.charAt(i) + " no es un caracter válido.");
+                    salidas+="El caracter: " + cadena.charAt(i) + " no es un caracter válido."+"\n";
+                    //System.out.println("El caracter: " + cadena.charAt(i) + " no es un caracter válido.");
                     error = true;
                 }
 
                 if (vocalesTilde.indexOf(cadena.charAt(i)) != -1) {
-                    System.out.println("El caracter: " + cadena.charAt(i) + " no es un caracter válido.");
+                    salidas+="El caracter: " + cadena.charAt(i) + " no es un caracter válido."+"\n";
+                    // System.out.println("El caracter: " + cadena.charAt(i) + " no es un caracter válido.");
                     error = true;
                 }
 
