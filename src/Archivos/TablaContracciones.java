@@ -10,21 +10,41 @@ import java.util.*;
 
 /**
  *
- * @author Administrador
+ * @author William Alexander Morales
  */
 public class TablaContracciones {
 
     Contraccion C = new Contraccion();
     Hashtable<String, Character> tContracciones = new Hashtable<String, Character>();
 
+    /**
+     * Método que verifica la existencia de una contracción dada.
+     *
+     * @param contraccion Contracción que se quiere verificar.
+     * @return En caso de que la contracción exista retorna True, de lo
+     * contrario retorna False.
+     */
     public boolean existeContraccion(String contraccion) {
         return tContracciones.containsKey(contraccion);
     }
 
+    /**
+     * Método que retorna el resultado de una contracción.
+     *
+     * @param contraccion Contracción a la cual se busca su resultado.
+     * @return Retorna el resultado de la contracción deseada.
+     */
     public Character resultadoContraccion(String contraccion) {
         return tContracciones.get(contraccion);
     }
-    
+
+    /**
+     * Método encargado de cargar el contenido del plano de contracciones en la
+     * tabla de contracciones.
+     *
+     * @return En caso de presentarse algún error en el proceso de carga retorna
+     * True, de lo contrario retorna False.
+     */
     public boolean cargarTabla() {
         File archivo = null;
         FileReader fr = null;
@@ -64,8 +84,14 @@ public class TablaContracciones {
         S = S + C.contraccion + " " + C.resultadoContraccion;
         return S;
     }
-    
-    public Enumeration listaContracciones(){
+
+    /**
+     * Método que consulta todas las llaves que se encuentran cargadas en la
+     * tabla.
+     *
+     * @return Listado de llaves que existen en la tabla.
+     */
+    public Enumeration listaContracciones() {
         return tContracciones.keys();
     }
 }

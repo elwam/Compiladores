@@ -1,4 +1,5 @@
 
+import java.awt.Color;
 import java.util.Enumeration;
 import java.util.logging.Logger;
 import javax.swing.UIManager;
@@ -51,7 +52,7 @@ public class MainCompilador extends javax.swing.JFrame {
         jTabbedPane1 = new javax.swing.JTabbedPane();
         jPanelCompilador = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jTextArea = new javax.swing.JTextArea();
+        jTextAreaEntrada = new javax.swing.JTextArea();
         jScrollPane3 = new javax.swing.JScrollPane();
         jTextArea2 = new javax.swing.JTextArea();
         jButton1 = new javax.swing.JButton();
@@ -59,12 +60,15 @@ public class MainCompilador extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         jTableContracciones = new javax.swing.JTable();
         jButtonConsultarContracciones = new javax.swing.JButton();
+        BarraMenu = new javax.swing.JMenuBar();
+        MenuAyuda = new javax.swing.JMenu();
+        AcercaDe = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jTextArea.setColumns(20);
-        jTextArea.setRows(5);
-        jScrollPane2.setViewportView(jTextArea);
+        jTextAreaEntrada.setColumns(20);
+        jTextAreaEntrada.setRows(5);
+        jScrollPane2.setViewportView(jTextAreaEntrada);
 
         jTextArea2.setColumns(20);
         jTextArea2.setRows(5);
@@ -95,7 +99,7 @@ public class MainCompilador extends javax.swing.JFrame {
             jPanelCompiladorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanelCompiladorLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 178, Short.MAX_VALUE)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 157, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButton1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -151,7 +155,7 @@ public class MainCompilador extends javax.swing.JFrame {
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButtonConsultarContracciones)
-                .addGap(0, 188, Short.MAX_VALUE))
+                .addGap(0, 167, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Contracciones", jPanelContracciones);
@@ -168,6 +172,21 @@ public class MainCompilador extends javax.swing.JFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jTabbedPane1, javax.swing.GroupLayout.Alignment.TRAILING)
         );
+
+        MenuAyuda.setText("Ayuda");
+
+        AcercaDe.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F12, 0));
+        AcercaDe.setText("Acerca de Compilador");
+        AcercaDe.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                AcercaDeActionPerformed(evt);
+            }
+        });
+        MenuAyuda.add(AcercaDe);
+
+        BarraMenu.add(MenuAyuda);
+
+        setJMenuBar(BarraMenu);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -209,37 +228,42 @@ public class MainCompilador extends javax.swing.JFrame {
     }//GEN-LAST:event_jButtonConsultarContraccionesActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        String cadena = jTextArea.getText();
-        lexico.validarCadena(cadena);
-        if (!lexico.validarCadena(cadena)) {
-            if (!lexico.cargarContracciones()) {
-                jTextArea2.setText("Error cargando las contracciones para realizar validación.");
-            } else {
-                String cadenaMinuscula = cadena.toLowerCase();
-                String arregloPalabras[] = lexico.arregloPalabras(cadenaMinuscula);
-                String arregloSilabas[] = new String[arregloPalabras.length];
-                for (int i = 0; i < arregloPalabras.length; i++) {
-                    arregloSilabas[i] = lexico.arregloSilabas(arregloPalabras[i]);
-                }
-
-                for (int i = 0; i < arregloPalabras.length; i++) {
-
-                    if (!lexico.contraccion2(arregloPalabras[i], arregloSilabas[i])) {
-                        jTextArea2.setText("Bien " + i + "\n");
-                    } else {
-                        jTextArea2.setText(lexico.salidas);
-                    }
-
-                }
-
+        String cadena = jTextAreaEntrada.getText();
+        cadena = cadena.toLowerCase();
+        cadena = cadena.replaceAll("\n", " \n");
+        cadena = cadena.replaceAll("\n", "");
+        if (!lexico.vocabulario(cadena)) {
+            String arregloPalabras[] = lexico.arregloPalabras(cadena);
+            String arregloEstadosPalabra[] = new String[arregloPalabras.length];
+            for (int i = 0; i < arregloPalabras.length; i++) {
+                arregloEstadosPalabra[i] = lexico.arregloEstadosPalabra(arregloPalabras[i]);
             }
+            lexico.cargarContracciones();
+            if (!lexico.contraccion(arregloPalabras, arregloEstadosPalabra)) {
+                jTextArea2.setText(lexico.salida);
+                lexico.setSalida("");
+                jTextArea2.setForeground(Color.GREEN);
+            } else {
+                jTextArea2.setText(lexico.salida);
+                lexico.setSalida("");
+                jTextArea2.setForeground(Color.red);
+            }
+
+
         } else {
-            jTextArea2.setText(lexico.salidas);
+            jTextArea2.setText(lexico.salida);
+            lexico.setSalida("");
+            jTextArea2.setForeground(Color.red);
         }
     }//GEN-LAST:event_jButton1ActionPerformed
 
+    private void AcercaDeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AcercaDeActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_AcercaDeActionPerformed
+
     /**
      * @param args the command line arguments
+     *
      */
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
@@ -273,6 +297,9 @@ public class MainCompilador extends javax.swing.JFrame {
         });
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JMenuItem AcercaDe;
+    private javax.swing.JMenuBar BarraMenu;
+    private javax.swing.JMenu MenuAyuda;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButtonConsultarContracciones;
     private javax.swing.JPanel jPanel1;
@@ -283,8 +310,7 @@ public class MainCompilador extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JTable jTableContracciones;
-    private javax.swing.JTextArea jTextArea;
     private javax.swing.JTextArea jTextArea2;
+    private javax.swing.JTextArea jTextAreaEntrada;
     // End of variables declaration//GEN-END:variables
-    Logger log1;
 }

@@ -13,50 +13,74 @@ import javax.swing.JOptionPane;
  */
 public class Lexico {
 
-    String salidas = "No se han presentado errores en la compilación!!!";
+    String salida = "";
     TablaContracciones tabla = new TablaContracciones();
 
     public String getSalidas() {
-        return salidas;
+        return salida;
     }
 
-    boolean validarCadena(String cadena) {
+    public void setSalida(String salida) {
+        this.salida = salida;
+    }
+
+    /**
+     * Metodo que valida el vocabulario de la cadena enviada, la recorre y
+     * asigna a la variable salida los posibles errores durante el reccorido.
+     *
+     * @param cadena Cadena en la que se quiere ferificar el vocabulario
+     * @return Retorna True si durante el recorrido de la cadena se ha
+     * presentado algún error de vocabulario, de lo contrario False.
+     */
+    boolean vocabulario(String cadena) {
         String vocalesTilde = "áéíóú";
         boolean error = false;
         if (cadena.length() == 0) {
-            //System.out.println("La cadena esta vacia!!!");
-            salidas += "La cadena esta vacia!!!";
+            salida += "Por favor digite una cadena para proceder con la compilación.";
             error = true;
         } else {
             for (int i = 0; i < cadena.length(); i++) {
                 if (!Character.isLetter(cadena.charAt(i)) && !Character.isSpace(cadena.charAt(i))) {
-                    salidas += "El caracter: " + cadena.charAt(i) + " no es un caracter válido." + "\n";
-                    //System.out.println("El caracter: " + cadena.charAt(i) + " no es un caracter válido.");
+                    salida += "El carácter: " + cadena.charAt(i) + " no es un carácter válido." + "\n";
                     error = true;
                 }
-
                 if (vocalesTilde.indexOf(cadena.charAt(i)) != -1) {
-                    salidas += "El caracter: " + cadena.charAt(i) + " no es un caracter válido." + "\n";
-                    // System.out.println("El caracter: " + cadena.charAt(i) + " no es un caracter válido.");
+                    salida += "El carácter: " + cadena.charAt(i) + " no es un carácter válido." + "\n";
                     error = true;
                 }
-
-
             }
+        }
+        if (!error) {
+            salida += "No se han presentado errores en el proceso de validación del vocabulario." + "\n";
         }
         return error;
     }
 
+    /**
+     * Método que convierte la cadena enviada en un arreglo de palabras, se debe
+     * tener en cuenta que utiliza los espacios para delimitar las palabras.
+     *
+     * @param cadena Cadena que quiere ser convertida a un arreglo de palabras.
+     * @return Retorna un arreglo de palabras.
+     */
     String[] arregloPalabras(String cadena) {
         String arreglo[] = cadena.split(" ");
         return arreglo;
     }
 
-    String arregloSilabas(String cadena) {
+    /**
+     * Método que identifica que letras son Vocales o Consonates en una palabra.
+     *
+     * @param palabra Palabra en la cual se quiere evaluar que letras son
+     * Consonates o Vocales
+     * @return Retorna una palabra donde se identifica morfologicamente que son
+     * Consonates y que son Vocales, Ejemplo: caminar ==> cvcvcvc
+     */
+    String arregloEstadosPalabra(String palabra) {
         String vocales = "aeiou";
         String tmp = "";
-        for (int i = 0; i < cadena.length(); i++) {
-            if (vocales.indexOf(cadena.charAt(i)) == -1) {
+        for (int i = 0; i < palabra.length(); i++) {
+            if (vocales.indexOf(palabra.charAt(i)) == -1) {
                 tmp = tmp + "c";
             } else {
                 tmp = tmp + "v";
@@ -65,104 +89,62 @@ public class Lexico {
         return tmp;
     }
 
-    String contraccion(String palabra, String estadosP) {
-
-        String letraAnt;
-
-        boolean hayContraccion = false;
-        String Resultado = "";
-        for (int i = 0; i < palabra.length(); i++) {
-            if (i != palabra.length() - 1) {
-
-                if (estadosP.charAt(i) == estadosP.charAt(i + 1)) {
-                    if (estadosP.charAt(i) == estadosP.charAt(i + 2)) {
-                        hayContraccion = true;
-                        String contraccion = Character.toString(palabra.charAt(i)) + Character.toString(palabra.charAt(i + 1));
-                        contraccion = tabla.resultadoContraccion(contraccion) + Character.toString(palabra.charAt(i + 2));
-                        Resultado += tabla.resultadoContraccion(contraccion);
-                        i++;
-                    } else {
-                        hayContraccion = true;
-                        String contraccion = Character.toString(palabra.charAt(i)) + Character.toString(palabra.charAt(i + 1));
-                        Resultado += tabla.resultadoContraccion(contraccion);
-                    }
-
-                } else {
-                    if (hayContraccion) {
-                        hayContraccion = false;
-                        if (palabra.charAt(i) == palabra.charAt(i - 1)) {
-                            Resultado += "";
-                        }
-                    } else {
-                        Resultado += palabra.charAt(i);
-                    }
-                }
-            } else {
-                if (!hayContraccion) {
-                    Resultado += palabra.charAt(i);
-                }
-            }
-
-        }
-
-        return Resultado;
-    }
-
-    boolean contraccion2(String palabra, String estadosP) {
-        salidas = "";
+    /**
+     * Método encargado de validar si las contracciones de una palabra son
+     * contracciones válidas.
+     *
+     * @param arregloPalabras Arreglo que contiene todas las palabras que se
+     * desean verificar.
+     * @param arregloEstadosPalabra Arreglo que contiene el estado de todas la
+     * palabra para realizar la validación
+     * @return En caso que durante el proceso de validación de contracciones
+     * resulte alguna invalidad se retornará True, de lo contrario False.
+     */
+    boolean contraccion(String arregloPalabras[], String arregloEstadosPalabra[]) {
         boolean error = false;
-        String Resultado = "";
-        for (int i = 0; i < palabra.length(); i++) {
-            if (i != palabra.length() - 1) {
-                if (estadosP.charAt(i) == estadosP.charAt(i + 1)) {
-                    if (estadosP.charAt(i) == estadosP.charAt(i + 2)) {
-                        String contraccion = Character.toString(palabra.charAt(i)) + Character.toString(palabra.charAt(i + 1));
-                        if (tabla.existeContraccion(contraccion)) {
-                            error = false;
-                            contraccion = tabla.resultadoContraccion(contraccion) + Character.toString(palabra.charAt(i + 2));
+        boolean hayContraccion = false;
 
-                            if (tabla.existeContraccion(contraccion)) {
-                                error = false;
+        for (int e = 0; e < arregloPalabras.length; e++) {
+            String palabra = arregloPalabras[e];
+            String estadosPalabra = arregloEstadosPalabra[e];
+            for (int i = 0; i < palabra.length(); i++) {
+                //Se validan los casos en contracciones tipo ccc ó vvv
+                if (i != palabra.length() - 1) {
+                    if (estadosPalabra.charAt(i) == estadosPalabra.charAt(i + 1)) {
+                        if (estadosPalabra.charAt(i) == estadosPalabra.charAt(i + 2)) {
+                            //Aqui se detecto una contracción ccc ó vvv
+                            hayContraccion = true;
+                            String contraccion = Character.toString(palabra.charAt(i)) + Character.toString(palabra.charAt(i + 1));
+                            if (tabla.existeContraccion(contraccion)) {                                // Se verifica la existencia de la contracción detectada.
+                                contraccion = tabla.resultadoContraccion(contraccion) + Character.toString(palabra.charAt(i + 2));
+                                if (tabla.existeContraccion(contraccion)) {
+                                } else {
+                                    error = true;
+                                    salida += "La contracción: " + contraccion + " no es una contracción válida" + "\n";
+                                }
                             } else {
                                 error = true;
-                                salidas += "La contracción " + contraccion + " no es una contraccion válida." + "\n";
-
+                                salida += "La contracción: " + contraccion + " no es una contracción válida" + "\n";
                             }
+                            i++;
                         } else {
-                            error = true;
-                            salidas += "La contracción " + contraccion + " no es una contraccion válida." + "\n";
+                            hayContraccion = true;
+                            String contraccion = Character.toString(palabra.charAt(i)) + Character.toString(palabra.charAt(i + 1));
+                            if (tabla.existeContraccion(contraccion)) {
+                            } else {
+                                error = true;
+                                salida += "La contracción: " + contraccion + " no es una contracción válida" + "\n";
+                            }
                         }
-                        i++;
                     } else {
-
-                        String contraccion = Character.toString(palabra.charAt(i)) + Character.toString(palabra.charAt(i + 1));
-                        if (tabla.existeContraccion(contraccion)) {
-                            error = false;
-                        } else {
-                            error = true;
-                            salidas += "La contracción " + contraccion + " no es una contraccion válida." + "\n";
-                        }
+                        hayContraccion = false;
                     }
-
                 }
-                /*else {
-                 if (hayContraccion) {
-                 hayContraccion = false;
-                 if (palabra.charAt(i) == palabra.charAt(i - 1)) {
-                 Resultado += "";
-                 }
-                 } else {
-                 Resultado += palabra.charAt(i);
-                 }
-                 }
-                 } else {
-                 if (!hayContraccion) {
-                 Resultado += palabra.charAt(i);
-                 }*/
             }
-
         }
-
+        if (!error) {
+            salida += "No se han presentado errores en el proceso de validación mofologica de la palabara >> Contracciones" + "\n";
+        }
         return error;
     }
 

@@ -17,7 +17,7 @@ public class MainLexico {
 
         Lexico lexico = new Lexico();
         cadena = JOptionPane.showInputDialog("Digite la cadena: ");
-        if (!lexico.validarCadena(cadena)) {
+        if (!lexico.vocabulario(cadena)) {
             if(!lexico.cargarContracciones()){
                 System.out.println("Error cargando tabla de contracciones!!");
             }else{
@@ -26,11 +26,11 @@ public class MainLexico {
             String arregloSilabas[] = new String[arregloPalabras.length];
             String arregloContracciones[] = new String[arregloPalabras.length];
             for (int i = 0; i < arregloPalabras.length; i++) {
-                arregloSilabas[i] = lexico.arregloSilabas(arregloPalabras[i]);
+                arregloSilabas[i] = lexico.arregloEstadosPalabra(arregloPalabras[i]);
             }
 
             for (int i = 0; i < arregloPalabras.length; i++) {
-                arregloContracciones[i] = lexico.contraccion(arregloPalabras[i], arregloSilabas[i]);
+             //   arregloContracciones[i] = lexico.contraccion(arregloPalabras[i], arregloSilabas[i]);
             }
             for (int i = 0; i < arregloPalabras.length; i++) {
                 System.out.println("Palabra: " + arregloPalabras[i] + " Silabas: " + arregloSilabas[i] + " Resultado:" + arregloContracciones[i]);
