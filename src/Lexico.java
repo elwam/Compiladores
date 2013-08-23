@@ -12,34 +12,31 @@ import javax.swing.JOptionPane;
  * @author Administrador
  */
 public class Lexico {
-    
-    String salidas="";
 
+    String salidas = "No se han presentado errores en la compilación!!!";
     TablaContracciones tabla = new TablaContracciones();
 
     public String getSalidas() {
         return salidas;
     }
-    
-    
 
     boolean validarCadena(String cadena) {
         String vocalesTilde = "áéíóú";
         boolean error = false;
         if (cadena.length() == 0) {
             //System.out.println("La cadena esta vacia!!!");
-            salidas+="La cadena esta vacia!!!";
+            salidas += "La cadena esta vacia!!!";
             error = true;
         } else {
             for (int i = 0; i < cadena.length(); i++) {
                 if (!Character.isLetter(cadena.charAt(i)) && !Character.isSpace(cadena.charAt(i))) {
-                    salidas+="El caracter: " + cadena.charAt(i) + " no es un caracter válido."+"\n";
+                    salidas += "El caracter: " + cadena.charAt(i) + " no es un caracter válido." + "\n";
                     //System.out.println("El caracter: " + cadena.charAt(i) + " no es un caracter válido.");
                     error = true;
                 }
 
                 if (vocalesTilde.indexOf(cadena.charAt(i)) != -1) {
-                    salidas+="El caracter: " + cadena.charAt(i) + " no es un caracter válido."+"\n";
+                    salidas += "El caracter: " + cadena.charAt(i) + " no es un caracter válido." + "\n";
                     // System.out.println("El caracter: " + cadena.charAt(i) + " no es un caracter válido.");
                     error = true;
                 }
@@ -109,6 +106,64 @@ public class Lexico {
         }
 
         return Resultado;
+    }
+
+    boolean contraccion2(String palabra, String estadosP) {
+        salidas = "";
+        boolean error = false;
+        String Resultado = "";
+        for (int i = 0; i < palabra.length(); i++) {
+            if (i != palabra.length() - 1) {
+                if (estadosP.charAt(i) == estadosP.charAt(i + 1)) {
+                    if (estadosP.charAt(i) == estadosP.charAt(i + 2)) {
+                        String contraccion = Character.toString(palabra.charAt(i)) + Character.toString(palabra.charAt(i + 1));
+                        if (tabla.existeContraccion(contraccion)) {
+                            error = false;
+                            contraccion = tabla.resultadoContraccion(contraccion) + Character.toString(palabra.charAt(i + 2));
+
+                            if (tabla.existeContraccion(contraccion)) {
+                                error = false;
+                            } else {
+                                error = true;
+                                salidas += "La contracción " + contraccion + " no es una contraccion válida." + "\n";
+
+                            }
+                        } else {
+                            error = true;
+                            salidas += "La contracción " + contraccion + " no es una contraccion válida." + "\n";
+                        }
+                        i++;
+                    } else {
+
+                        String contraccion = Character.toString(palabra.charAt(i)) + Character.toString(palabra.charAt(i + 1));
+                        if (tabla.existeContraccion(contraccion)) {
+                            error = false;
+                        } else {
+                            error = true;
+                            salidas += "La contracción " + contraccion + " no es una contraccion válida." + "\n";
+                        }
+                    }
+
+                }
+                /*else {
+                 if (hayContraccion) {
+                 hayContraccion = false;
+                 if (palabra.charAt(i) == palabra.charAt(i - 1)) {
+                 Resultado += "";
+                 }
+                 } else {
+                 Resultado += palabra.charAt(i);
+                 }
+                 }
+                 } else {
+                 if (!hayContraccion) {
+                 Resultado += palabra.charAt(i);
+                 }*/
+            }
+
+        }
+
+        return error;
     }
 
     boolean cargarContracciones() {

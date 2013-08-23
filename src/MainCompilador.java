@@ -18,7 +18,7 @@ public class MainCompilador extends javax.swing.JFrame {
      * Creates new form MainCompilador
      */
     Lexico lexico = new Lexico();
-    
+
     public MainCompilador() {
         try {
             if (isWindows()) {
@@ -32,7 +32,7 @@ public class MainCompilador extends javax.swing.JFrame {
         }
         initComponents();
     }
-    
+
     private boolean isWindows() {
         String os = System.getProperty("os.name").toLowerCase();
         return (os.indexOf("win") >= 0);
@@ -70,7 +70,7 @@ public class MainCompilador extends javax.swing.JFrame {
         jTextArea2.setRows(5);
         jScrollPane3.setViewportView(jTextArea2);
 
-        jButton1.setText("Validar");
+        jButton1.setText("Compilar");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
@@ -83,22 +83,23 @@ public class MainCompilador extends javax.swing.JFrame {
             jPanelCompiladorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanelCompiladorLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanelCompiladorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jButton1)
-                    .addGroup(jPanelCompiladorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 367, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 367, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(18, Short.MAX_VALUE))
+                .addGroup(jPanelCompiladorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 455, Short.MAX_VALUE)
+                    .addComponent(jScrollPane3, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelCompiladorLayout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(jButton1)))
+                .addContainerGap())
         );
         jPanelCompiladorLayout.setVerticalGroup(
             jPanelCompiladorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanelCompiladorLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 178, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButton1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 9, Short.MAX_VALUE)
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
 
@@ -139,7 +140,7 @@ public class MainCompilador extends javax.swing.JFrame {
         jPanelContracciones.setLayout(jPanelContraccionesLayout);
         jPanelContraccionesLayout.setHorizontalGroup(
             jPanelContraccionesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 395, Short.MAX_VALUE)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 475, Short.MAX_VALUE)
             .addGroup(jPanelContraccionesLayout.createSequentialGroup()
                 .addComponent(jButtonConsultarContracciones)
                 .addGap(0, 0, Short.MAX_VALUE))
@@ -150,7 +151,7 @@ public class MainCompilador extends javax.swing.JFrame {
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButtonConsultarContracciones)
-                .addGap(0, 123, Short.MAX_VALUE))
+                .addGap(0, 188, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Contracciones", jPanelContracciones);
@@ -159,7 +160,9 @@ public class MainCompilador extends javax.swing.JFrame {
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jTabbedPane1, javax.swing.GroupLayout.Alignment.TRAILING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 480, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -181,34 +184,58 @@ public class MainCompilador extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButtonConsultarContraccionesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonConsultarContraccionesActionPerformed
-        
+
         lexico.cargarContracciones();
-        
+
         String datos[] = new String[2];
-        String Columnas[] = {"Contracción","Resultado"};
+        String Columnas[] = {"Contracción", "Resultado"};
         Enumeration a = lexico.listaContra();
         DefaultTableModel modelo = new DefaultTableModel(Columnas, 0);
-              
+
         while (a.hasMoreElements()) {
             String llave = (String) a.nextElement();
             datos = lexico.Contraccion(llave).split(" ");
             modelo.addRow(datos);
-            
+
             //System.err.println(lexico.Contraccion(llave));
         }
         //jTableContracciones.setModel(modelo);
 
-        
+
         jTableContracciones.setModel(modelo);
         //jTableContracciones.setVisible(true);
-        
-        
+
+
     }//GEN-LAST:event_jButtonConsultarContraccionesActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-       String cadena = jTextArea.getText();
-       lexico.validarCadena(cadena);
-      jTextArea2.setText(lexico.salidas);
+        String cadena = jTextArea.getText();
+        lexico.validarCadena(cadena);
+        if (!lexico.validarCadena(cadena)) {
+            if (!lexico.cargarContracciones()) {
+                jTextArea2.setText("Error cargando las contracciones para realizar validación.");
+            } else {
+                String cadenaMinuscula = cadena.toLowerCase();
+                String arregloPalabras[] = lexico.arregloPalabras(cadenaMinuscula);
+                String arregloSilabas[] = new String[arregloPalabras.length];
+                for (int i = 0; i < arregloPalabras.length; i++) {
+                    arregloSilabas[i] = lexico.arregloSilabas(arregloPalabras[i]);
+                }
+
+                for (int i = 0; i < arregloPalabras.length; i++) {
+
+                    if (!lexico.contraccion2(arregloPalabras[i], arregloSilabas[i])) {
+                        jTextArea2.setText("Bien " + i + "\n");
+                    } else {
+                        jTextArea2.setText(lexico.salidas);
+                    }
+
+                }
+
+            }
+        } else {
+            jTextArea2.setText(lexico.salidas);
+        }
     }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
@@ -259,5 +286,5 @@ public class MainCompilador extends javax.swing.JFrame {
     private javax.swing.JTextArea jTextArea;
     private javax.swing.JTextArea jTextArea2;
     // End of variables declaration//GEN-END:variables
-Logger log1;
+    Logger log1;
 }

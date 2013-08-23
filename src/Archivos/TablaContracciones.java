@@ -24,7 +24,7 @@ public class TablaContracciones {
     public Character resultadoContraccion(String contraccion) {
         return tContracciones.get(contraccion);
     }
-
+    
     public boolean cargarTabla() {
         File archivo = null;
         FileReader fr = null;
