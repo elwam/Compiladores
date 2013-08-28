@@ -18,27 +18,27 @@ public class MainLexico {
         Lexico lexico = new Lexico();
         cadena = JOptionPane.showInputDialog("Digite la cadena: ");
         if (!lexico.vocabulario(cadena)) {
-            if(!lexico.cargarContracciones()){
+            if (!lexico.cargarContracciones()) {
                 System.out.println("Error cargando tabla de contracciones!!");
-            }else{
-            cadenaMinuscula = cadena.toLowerCase();
-            String arregloPalabras[] = lexico.arregloPalabras(cadenaMinuscula);
-            String arregloSilabas[] = new String[arregloPalabras.length];
-            String arregloContracciones[] = new String[arregloPalabras.length];
-            for (int i = 0; i < arregloPalabras.length; i++) {
-                arregloSilabas[i] = lexico.arregloEstadosPalabra(arregloPalabras[i]);
+            } else {
+                cadenaMinuscula = cadena.toLowerCase();
+                String arregloPalabras[] = lexico.arregloPalabras(cadenaMinuscula);
+                String arregloSilabas[] = new String[arregloPalabras.length];
+                String arregloContracciones[] = new String[arregloPalabras.length];
+                for (int i = 0; i < arregloPalabras.length; i++) {
+                    arregloSilabas[i] = lexico.arregloEstadosPalabra(arregloPalabras[i]);
+                }
+
+                for (int i = 0; i < arregloPalabras.length; i++) {
+                    //   arregloContracciones[i] = lexico.contraccion(arregloPalabras[i], arregloSilabas[i]);
+                }
+                for (int i = 0; i < arregloPalabras.length; i++) {
+                    System.out.println("Palabra: " + arregloPalabras[i] + " Silabas: " + arregloSilabas[i] + " Resultado:" + arregloContracciones[i]);
+                }
+                System.out.println("La cadena es: " + cadena);
+                System.out.println("La cadena es: " + cadenaMinuscula);
             }
 
-            for (int i = 0; i < arregloPalabras.length; i++) {
-             //   arregloContracciones[i] = lexico.contraccion(arregloPalabras[i], arregloSilabas[i]);
-            }
-            for (int i = 0; i < arregloPalabras.length; i++) {
-                System.out.println("Palabra: " + arregloPalabras[i] + " Silabas: " + arregloSilabas[i] + " Resultado:" + arregloContracciones[i]);
-            }
-            System.out.println("La cadena es: " + cadena);
-            System.out.println("La cadena es: " + cadenaMinuscula);
-        }
-            
         }
 
     }

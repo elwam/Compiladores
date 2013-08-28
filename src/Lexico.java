@@ -117,8 +117,7 @@ public class Lexico {
                             String contraccion = Character.toString(palabra.charAt(i)) + Character.toString(palabra.charAt(i + 1));
                             if (tabla.existeContraccion(contraccion)) {                                // Se verifica la existencia de la contracción detectada.
                                 contraccion = tabla.resultadoContraccion(contraccion) + Character.toString(palabra.charAt(i + 2));
-                                if (tabla.existeContraccion(contraccion)) {
-                                } else {
+                                if (!tabla.existeContraccion(contraccion)) {
                                     error = true;
                                     salida += "La contracción: " + contraccion + " no es una contracción válida" + "\n";
                                 }
