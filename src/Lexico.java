@@ -1,5 +1,7 @@
 
 import Archivos.TablaContracciones;
+import DB.BD;
+import java.sql.ResultSet;
 import java.util.Enumeration;
 import javax.swing.JOptionPane;
 
@@ -15,6 +17,8 @@ public class Lexico {
 
     String salida = "";
     TablaContracciones tabla = new TablaContracciones();
+    ///
+    BD mundo = new BD();
 
     public String getSalidas() {
         return salida;
@@ -158,5 +162,27 @@ public class Lexico {
 
     Enumeration listaContra() {
         return tabla.listaContracciones();
+    }
+
+    //
+    public boolean validar(String arregloPalabras[]) {
+        boolean error = false;
+
+        for (int i = 0; i < arregloPalabras.length; i++) {
+            
+            
+                if (mundo.consulta(arregloPalabras[i])) {
+                    error = true;
+                    salida += "La palabra: " + arregloPalabras[i] + " no es una palabra del mundo." + "\n";
+                }
+            
+        }
+
+
+        if (!error) {
+            salida += "No se han presentado errores en el proceso de validación mofologica de la palabara >> Mundo Lexico" + "\n";
+        }
+        return error;
+
     }
 }

@@ -240,9 +240,17 @@ public class MainCompilador extends javax.swing.JFrame {
             }
             lexico.cargarContracciones();
             if (!lexico.contraccion(arregloPalabras, arregloEstadosPalabra)) {
-                jTextArea2.setText(lexico.salida);
-                lexico.setSalida("");
-                jTextArea2.setForeground(Color.GREEN);
+
+                if (!lexico.validar(arregloPalabras)) {
+                    jTextArea2.setText(lexico.salida);
+                    lexico.setSalida("");
+                    jTextArea2.setForeground(Color.GREEN);
+                } else {
+                    jTextArea2.setText(lexico.salida);
+                    lexico.setSalida("");
+                    jTextArea2.setForeground(Color.red);
+                }
+
             } else {
                 jTextArea2.setText(lexico.salida);
                 lexico.setSalida("");
