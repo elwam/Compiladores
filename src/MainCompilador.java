@@ -242,6 +242,7 @@ public class MainCompilador extends javax.swing.JFrame {
             if (!lexico.contraccion(arregloPalabras, arregloEstadosPalabra)) {
 
                 if (!lexico.validar(arregloPalabras)) {
+                    lexico.st(arregloPalabras);
                     jTextArea2.setText(lexico.salida);
                     lexico.setSalida("");
                     jTextArea2.setForeground(Color.GREEN);

@@ -184,4 +184,19 @@ public class Lexico {
         return error;
 
     }
+    
+       public void st(String arregloPalabras[]) {
+        
+
+        for (int i = 0; i < arregloPalabras.length; i++) {
+            
+            salida += "la palabra: "+arregloPalabras[i]+" se compone de: "+mundo.clasificacion(arregloPalabras[i]);
+            
+            
+        }
+
+
+        
+    }
+    
 }
