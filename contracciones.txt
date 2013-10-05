@@ -9,3 +9,5 @@ nt,t;
 ae,a;
 ll,l;
 rr,r;
+nd,d;
+ia,a;

@@ -146,7 +146,7 @@ public class Lexico {
             }
         }
         if (!error) {
-            salida += "No se han presentado errores en el proceso de validación mofologica de la palabara >> Contracciones" + "\n";
+            salida += "No se han presentado errores en el proceso de validación morfológica de la palabara >> Contracciones" + "\n";
         }
         return error;
     }
@@ -168,35 +168,89 @@ public class Lexico {
         boolean error = false;
 
         for (int i = 0; i < arregloPalabras.length; i++) {
-            
-            
-                if (mundo.consulta(arregloPalabras[i])) {
-                    error = true;
-                    salida += "La palabra: " + arregloPalabras[i] + " no es una palabra del mundo." + "\n";
-                }
-            
+
+
+            if (mundo.consulta(arregloPalabras[i])) {
+                error = true;
+                salida += "La palabra--> " + arregloPalabras[i] + " no es una palabra del mundo." + "\n";
+            }
+
         }
 
 
         if (!error) {
-            salida += "No se han presentado errores en el proceso de validación mofologica de la palabara >> Mundo Lexico" + "\n";
+            salida += "No se han presentado errores en el proceso de validación morfológica de la palabara >> Mundo Lexico" + "\n";
         }
         return error;
 
     }
-    
-       public void st(String arregloPalabras[]) {
-        
 
+    public void composicionPalabra(String arregloPalabras[]) {
         for (int i = 0; i < arregloPalabras.length; i++) {
-            
-            salida += "la palabra: "+arregloPalabras[i]+" se compone de: "+mundo.clasificacion(arregloPalabras[i]);
-            
-            
+            salida += "la palabra--> " + arregloPalabras[i] + ", se compone de: " + mundo.clasificacion(arregloPalabras[i]) + "\n";
+        }
+    }
+
+    public boolean composicionOracion(String arregloPalabras[]) {
+        boolean error = false;
+        String[][] oracion = new String[6][4];
+        //int var_temp = 0;
+        if (arregloPalabras.length == 6) {
+            for (int i = 0; i < arregloPalabras.length; i++) {
+                //  var_temp++;
+                String temp[] = mundo.detalles(arregloPalabras[i]).split(" ");
+
+                for (int x = 0; x < temp.length; x++) {
+                    oracion[i][x] = temp[x];
+                }
+            }
+
+
+            if (oracion[0][3].equals("Articulo") && oracion[1][3].equals("Sustantivo")) {
+                //valida que genero y numero del sustantivo sea igual al del articulo.
+                if (oracion[0][1].equals(oracion[1][1]) && oracion[0][2].equals(oracion[1][2])) {
+                    if (oracion[2][3].equals("Verbo") && oracion[3][3].equals("Preposicion") && oracion[4][3].equals("Articulo") && oracion[5][3].equals("Sustantivo")) {
+//                    salida += "la oración esta bien redactado";
+                        if (oracion[1][2].equals(oracion[2][2])) {
+                            if (oracion[4][3].equals("Articulo") && oracion[5][3].equals("Sustantivo")) {
+                                if (oracion[4][1].equals(oracion[5][1]) && oracion[4][2].equals(oracion[5][2])) {
+                                } else {
+                                    error = true;
+                                    salida += "Verifique genero y numero del sujeto del predicado.\n";
+                                }
+                            } else {
+                                error = true;
+                                salida += "Verifique el sujeto del predicado (el predicado debe terminar con un sujeto (Articulo+Sustantivo)).\n";
+                            }
+                        } else {
+                            error = true;
+                            salida += "Verifique numero del sujeto y el verbo (Numero de sujeto = Numero de verbo).\n";
+                        }
+
+                    } else {
+                        error = true;
+                        salida += "Verifique el predicado de la oracion.\n";
+                    }
+                } else {
+                    error = true;
+                    salida += "Verifique genero y numero del sujeto.\n";
+                }
+            } else {
+                error = true;
+                salida += "La oración debe iniciar con un sujeto (Articulo+Sustantivo)\n";
+            }
+
+        } else {
+            error = true;
+            salida += "Verifique que la oración este completa ó cumple con lo siguiente: Articulo+Sustantivo+Verbo+Preposicion+Articulo+Sustantivo.\n";
         }
 
+        // valida que la primera parte sea un sujeto
 
-        
+        if (!error) {
+            salida += "No se han presentado errores en el proceso de validación sintactica de la palabra." + "\n";
+        }
+        return error;
+
     }
-    
 }

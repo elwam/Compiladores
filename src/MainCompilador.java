@@ -48,6 +48,7 @@ public class MainCompilador extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        buttonGroup = new javax.swing.ButtonGroup();
         jPanel1 = new javax.swing.JPanel();
         jTabbedPane1 = new javax.swing.JTabbedPane();
         jPanelCompilador = new javax.swing.JPanel();
@@ -55,6 +56,10 @@ public class MainCompilador extends javax.swing.JFrame {
         jTextAreaEntrada = new javax.swing.JTextArea();
         jScrollPane3 = new javax.swing.JScrollPane();
         jTextArea2 = new javax.swing.JTextArea();
+        jPanel2 = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
+        jRadioButtonPalabra = new javax.swing.JRadioButton();
+        jRadioButtonOracion = new javax.swing.JRadioButton();
         jButton1 = new javax.swing.JButton();
         jPanelContracciones = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -74,12 +79,54 @@ public class MainCompilador extends javax.swing.JFrame {
         jTextArea2.setRows(5);
         jScrollPane3.setViewportView(jTextArea2);
 
+        jPanel2.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+
+        jLabel1.setText("Modo Compilacion:");
+
+        buttonGroup.add(jRadioButtonPalabra);
+        jRadioButtonPalabra.setText("Palabra");
+        jRadioButtonPalabra.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jRadioButtonPalabraActionPerformed(evt);
+            }
+        });
+
+        buttonGroup.add(jRadioButtonOracion);
+        jRadioButtonOracion.setText("Oración");
+
         jButton1.setText("Compilar");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
             }
         });
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jRadioButtonPalabra)
+                .addGap(10, 10, 10)
+                .addComponent(jRadioButtonOracion)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jButton1)
+                .addContainerGap())
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jRadioButtonOracion)
+                    .addComponent(jRadioButtonPalabra)
+                    .addComponent(jLabel1)
+                    .addComponent(jButton1))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
 
         javax.swing.GroupLayout jPanelCompiladorLayout = new javax.swing.GroupLayout(jPanelCompilador);
         jPanelCompilador.setLayout(jPanelCompiladorLayout);
@@ -88,22 +135,20 @@ public class MainCompilador extends javax.swing.JFrame {
             .addGroup(jPanelCompiladorLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanelCompiladorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 455, Short.MAX_VALUE)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 469, Short.MAX_VALUE)
                     .addComponent(jScrollPane3, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelCompiladorLayout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(jButton1)))
+                    .addComponent(jPanel2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         jPanelCompiladorLayout.setVerticalGroup(
             jPanelCompiladorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanelCompiladorLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 157, Short.MAX_VALUE)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton1)
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 132, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -144,7 +189,7 @@ public class MainCompilador extends javax.swing.JFrame {
         jPanelContracciones.setLayout(jPanelContraccionesLayout);
         jPanelContraccionesLayout.setHorizontalGroup(
             jPanelContraccionesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 475, Short.MAX_VALUE)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 489, Short.MAX_VALUE)
             .addGroup(jPanelContraccionesLayout.createSequentialGroup()
                 .addComponent(jButtonConsultarContracciones)
                 .addGap(0, 0, Short.MAX_VALUE))
@@ -155,7 +200,7 @@ public class MainCompilador extends javax.swing.JFrame {
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButtonConsultarContracciones)
-                .addGap(0, 167, Short.MAX_VALUE))
+                .addGap(0, 189, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Contracciones", jPanelContracciones);
@@ -165,8 +210,8 @@ public class MainCompilador extends javax.swing.JFrame {
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 480, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+                .addComponent(jTabbedPane1)
+                .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -232,43 +277,98 @@ public class MainCompilador extends javax.swing.JFrame {
         cadena = cadena.toLowerCase();
         cadena = cadena.replaceAll("\n", " \n");
         cadena = cadena.replaceAll("\n", "");
-        if (!lexico.vocabulario(cadena)) {
-            String arregloPalabras[] = lexico.arregloPalabras(cadena);
-            String arregloEstadosPalabra[] = new String[arregloPalabras.length];
-            for (int i = 0; i < arregloPalabras.length; i++) {
-                arregloEstadosPalabra[i] = lexico.arregloEstadosPalabra(arregloPalabras[i]);
-            }
-            lexico.cargarContracciones();
-            if (!lexico.contraccion(arregloPalabras, arregloEstadosPalabra)) {
 
-                if (!lexico.validar(arregloPalabras)) {
-                    lexico.st(arregloPalabras);
-                    jTextArea2.setText(lexico.salida);
-                    lexico.setSalida("");
-                    jTextArea2.setForeground(Color.GREEN);
+        if (jRadioButtonPalabra.isSelected()) {
+            if (!lexico.vocabulario(cadena)) {
+                String arregloPalabras[] = lexico.arregloPalabras(cadena);
+                String arregloEstadosPalabra[] = new String[arregloPalabras.length];
+                for (int i = 0; i < arregloPalabras.length; i++) {
+                    arregloEstadosPalabra[i] = lexico.arregloEstadosPalabra(arregloPalabras[i]);
+                }
+                lexico.cargarContracciones();
+                if (!lexico.contraccion(arregloPalabras, arregloEstadosPalabra)) {
+
+                    if (!lexico.validar(arregloPalabras)) {
+                        lexico.composicionPalabra(arregloPalabras);
+                        jTextArea2.setText(lexico.salida);
+                        lexico.setSalida("");
+                        jTextArea2.setForeground(Color.GREEN);
+                    } else {
+                        jTextArea2.setText(lexico.salida);
+                        lexico.setSalida("");
+                        jTextArea2.setForeground(Color.red);
+                    }
+
                 } else {
                     jTextArea2.setText(lexico.salida);
                     lexico.setSalida("");
                     jTextArea2.setForeground(Color.red);
                 }
 
+
             } else {
                 jTextArea2.setText(lexico.salida);
                 lexico.setSalida("");
                 jTextArea2.setForeground(Color.red);
             }
+        } else if (jRadioButtonOracion.isSelected()) {
+            if (!lexico.vocabulario(cadena)) {
+                String arregloPalabras[] = lexico.arregloPalabras(cadena);
+                String arregloEstadosPalabra[] = new String[arregloPalabras.length];
+                for (int i = 0; i < arregloPalabras.length; i++) {
+                    arregloEstadosPalabra[i] = lexico.arregloEstadosPalabra(arregloPalabras[i]);
+                }
+                lexico.cargarContracciones();
+                if (!lexico.contraccion(arregloPalabras, arregloEstadosPalabra)) {
+
+                    if (!lexico.validar(arregloPalabras)) {
+                        //lexico.composicionPalabra(arregloPalabras);
+                        //jTextArea2.setText(lexico.salida);
+                        //lexico.setSalida("");
+                        //jTextArea2.setForeground(Color.GREEN);
+                        if (!lexico.composicionOracion(arregloPalabras)) {
+                            jTextArea2.setText(lexico.salida);
+                            lexico.setSalida("");
+                            jTextArea2.setForeground(Color.GREEN);
+                        } else {
+                            jTextArea2.setText(lexico.salida);
+                            lexico.setSalida("");
+                            jTextArea2.setForeground(Color.red);
+                        }
+
+                    } else {
+                        jTextArea2.setText(lexico.salida);
+                        lexico.setSalida("");
+                        jTextArea2.setForeground(Color.red);
+                    }
+
+                } else {
+                    jTextArea2.setText(lexico.salida);
+                    lexico.setSalida("");
+                    jTextArea2.setForeground(Color.red);
+                }
 
 
+            } else {
+                jTextArea2.setText(lexico.salida);
+                lexico.setSalida("");
+                jTextArea2.setForeground(Color.red);
+            }
         } else {
-            jTextArea2.setText(lexico.salida);
-            lexico.setSalida("");
+            jTextArea2.setText("Por favor seleccione un modo de compilación!!!");
             jTextArea2.setForeground(Color.red);
         }
+
+
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void AcercaDeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AcercaDeActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_AcercaDeActionPerformed
+
+    private void jRadioButtonPalabraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButtonPalabraActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jRadioButtonPalabraActionPerformed
 
     /**
      * @param args the command line arguments
@@ -309,11 +409,16 @@ public class MainCompilador extends javax.swing.JFrame {
     private javax.swing.JMenuItem AcercaDe;
     private javax.swing.JMenuBar BarraMenu;
     private javax.swing.JMenu MenuAyuda;
+    private javax.swing.ButtonGroup buttonGroup;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButtonConsultarContracciones;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanelCompilador;
     private javax.swing.JPanel jPanelContracciones;
+    private javax.swing.JRadioButton jRadioButtonOracion;
+    private javax.swing.JRadioButton jRadioButtonPalabra;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
