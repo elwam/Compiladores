@@ -214,9 +214,21 @@ public class Lexico {
                         if (oracion[1][2].equals(oracion[2][2])) {
                             if (oracion[4][3].equals("Articulo") && oracion[5][3].equals("Sustantivo")) {
                                 if (oracion[4][1].equals(oracion[5][1]) && oracion[4][2].equals(oracion[5][2])) {
+                                    salida += "No se han presentado errores en el proceso de validación sintactica de la oración" + "\n";
+                                    if (!mundo.pragmatica(oracion[1][0], oracion[5][0], oracion[3][0])) {
+                                        salida += "No se han presentado errores en el proceso de validación prágmatica de la oración.\n";
+                                    } else {
+                                        if (!mundo.pragmatica2(oracion[1][0], oracion[5][0]).equals("N")) {
+                                            error = true;
+                                            salida += "En el mundo establecido, la preposicion que une los sustantivos: " + oracion[1][0] + " y " + oracion[5][0] + " es: " + mundo.pragmatica2(oracion[1][0], oracion[5][0]) + "\n";
+                                        } else {
+                                            error = true;
+                                            salida += "Verifique la pragmatica de la oración, ya que la relación "+oracion[1][0]+" y "+oracion[5][0]+" no existe en el mundo\n";
+                                        }
+                                    }
                                 } else {
                                     error = true;
-                                    salida += "Verifique genero y numero del sujeto del predicado.\n";
+                                    salida += "Verifique genero y numero del sustantivo del predicado.\n";
                                 }
                             } else {
                                 error = true;
@@ -247,9 +259,9 @@ public class Lexico {
 
         // valida que la primera parte sea un sujeto
 
-        if (!error) {
-            salida += "No se han presentado errores en el proceso de validación sintactica de la palabra." + "\n";
-        }
+        /*    if (!error) {
+         salida += "No se han presentado errores en el proceso de validación sintactica de la palabra." + "\n";
+         }*/
         return error;
 
     }

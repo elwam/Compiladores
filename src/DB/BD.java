@@ -127,4 +127,77 @@ public class BD {
         }
         return p;
     }
+
+    public boolean pragmatica(String sustantivo_1, String sustantivo_2, String preposicion) {
+        boolean error = false;
+        ResultSet rs = null;
+        String p = "N";
+
+        try {
+            // Se registra el Driver de MySQL
+            DriverManager.registerDriver(new org.gjt.mm.mysql.Driver());
+
+            // Se obtiene una conexión con la base de datos. Hay que
+            // cambiar el usuario "root" y la clave "la_clave" por las
+            // adecuadas a la base de datos que estemos usando.
+            Connection conexion = DriverManager.getConnection("jdbc:mysql://localhost/db_compiladores", "root", "root");
+
+            // Se crea un Statement, para realizar la consulta
+            Statement s = conexion.createStatement();
+
+            // Se realiza la consulta. Los resultados se guardan en el 
+            // ResultSet rs
+            rs = s.executeQuery("select sustantivo_1, sustantivo_2, verbo, preposicion from clasificacion_pragmatica where sustantivo_1 = '" + sustantivo_1 + "' and sustantivo_2 ='" + sustantivo_2 + "' and preposicion = '" + preposicion + "'");
+
+            // Se recorre el ResultSet, mostrando por pantalla los resultados.
+            while (rs.next()) {
+                // p = "raiz: " + rs.getString("ds_raiz") + " terminacion: " + rs.getString("ds_terminacion") + " y es un: " + rs.getString("ds_naturaleza");
+                p = rs.getString("preposicion");
+            }
+
+            if (p.equals("N")) {
+                error = true;
+            }
+            conexion.close();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return error;
+    }
+
+    public String pragmatica2(String sustantivo_1, String sustantivo_2) {
+
+        ResultSet rs = null;
+        String p = "N";
+
+        try {
+            // Se registra el Driver de MySQL
+            DriverManager.registerDriver(new org.gjt.mm.mysql.Driver());
+
+            // Se obtiene una conexión con la base de datos. Hay que
+            // cambiar el usuario "root" y la clave "la_clave" por las
+            // adecuadas a la base de datos que estemos usando.
+            Connection conexion = DriverManager.getConnection("jdbc:mysql://localhost/db_compiladores", "root", "root");
+
+            // Se crea un Statement, para realizar la consulta
+            Statement s = conexion.createStatement();
+
+            // Se realiza la consulta. Los resultados se guardan en el 
+            // ResultSet rs
+            rs = s.executeQuery("select sustantivo_1, sustantivo_2, verbo, preposicion from clasificacion_pragmatica where sustantivo_1 = '" + sustantivo_1 + "' and sustantivo_2 = '" + sustantivo_2 + "'");
+
+            // Se recorre el ResultSet, mostrando por pantalla los resultados.
+            while (rs.next()) {
+                // p = "raiz: " + rs.getString("ds_raiz") + " terminacion: " + rs.getString("ds_terminacion") + " y es un: " + rs.getString("ds_naturaleza");
+                p = rs.getString("preposicion");
+            }
+
+            conexion.close();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return p;
+    }
 }
