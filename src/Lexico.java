@@ -113,7 +113,7 @@ public class Lexico {
             String estadosPalabra = arregloEstadosPalabra[e];
             for (int i = 0; i < palabra.length(); i++) {
                 //Se validan los casos en contracciones tipo ccc ó vvv
-                if (i != palabra.length() - 1) {
+                if (i < palabra.length() - 2) {
                     if (estadosPalabra.charAt(i) == estadosPalabra.charAt(i + 1)) {
                         if (estadosPalabra.charAt(i) == estadosPalabra.charAt(i + 2)) {
                             //Aqui se detecto una contracción ccc ó vvv
