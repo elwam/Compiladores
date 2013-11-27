@@ -200,4 +200,108 @@ public class BD {
         }
         return p;
     }
+
+    public String consultaP(String verbo, String preposicion, String sustantivo2) {
+        boolean error = false;
+        ResultSet rs = null;
+        String p = "N";
+
+        try {
+            // Se registra el Driver de MySQL
+            DriverManager.registerDriver(new org.gjt.mm.mysql.Driver());
+
+            // Se obtiene una conexión con la base de datos. Hay que
+            // cambiar el usuario "root" y la clave "la_clave" por las
+            // adecuadas a la base de datos que estemos usando.
+            Connection conexion = DriverManager.getConnection("jdbc:mysql://localhost/db_compiladores", "root", "root");
+
+            // Se crea un Statement, para realizar la consulta
+            Statement s = conexion.createStatement();
+
+            // Se realiza la consulta. Los resultados se guardan en el 
+            // ResultSet rs
+            // rs = s.executeQuery("select * from (select t1.raiz, concat_ws('',t2.raiz,t2.terminacion) as palabra from compiladores.raiz t1 inner join compiladores.clasificacion_raiz t2 on (t1.raiz = t2.raiz)) t1 where t1.palabra ='" + palabra + "'");
+
+            rs = s.executeQuery("select ds_raiz from (select concat_ws('',ds_raiz,ds_terminacion) palabra, ds_raiz from db_compiladores.clasificacion_raiz t1 inner join db_compiladores.raiz t2 on (t1.id_raiz = t2.id_raiz)) t3 where t3.palabra = '" + verbo + "'");
+
+            // Se recorre el ResultSet, mostrando por pantalla los resultados.
+
+            while (rs.next()) {
+                p = rs.getString("ds_raiz");
+            }
+
+            if (!p.equals("N")) {
+                rs = s.executeQuery("select sustantivo_1 from db_compiladores.clasificacion_pragmatica where sustantivo_2 = '" + sustantivo2 + "' and verbo ='" + p + "' and preposicion ='" + preposicion + "'");
+
+                while (rs.next()) {
+                    p = rs.getString("sustantivo_1");
+                }
+
+                /*if (!p.equals("ERROR1")) {
+                 rs = s.executeQuery("select tipo from db_compiladores.clasificacion_sustantivos where sustantivo ='" + p + "'");
+
+                 while (rs.next()) {
+                 p = rs.getString("tipo");
+                 }
+
+
+                 } else {
+                 p = "ERROR2";
+                 }*/
+
+
+            } else {
+                p = "ERROR1";
+            }
+
+            // Se cierra la conexión con la base de datos.
+            conexion.close();
+
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return p;
+
+    }
+
+    public String consultaTipo(String sustantivo) {
+        boolean error = false;
+        ResultSet rs = null;
+        String p = "N";
+
+        try {
+            // Se registra el Driver de MySQL
+            DriverManager.registerDriver(new org.gjt.mm.mysql.Driver());
+
+            // Se obtiene una conexión con la base de datos. Hay que
+            // cambiar el usuario "root" y la clave "la_clave" por las
+            // adecuadas a la base de datos que estemos usando.
+            Connection conexion = DriverManager.getConnection("jdbc:mysql://localhost/db_compiladores", "root", "root");
+
+            // Se crea un Statement, para realizar la consulta
+            Statement s = conexion.createStatement();
+
+            // Se realiza la consulta. Los resultados se guardan en el 
+            // ResultSet rs
+            // rs = s.executeQuery("select * from (select t1.raiz, concat_ws('',t2.raiz,t2.terminacion) as palabra from compiladores.raiz t1 inner join compiladores.clasificacion_raiz t2 on (t1.raiz = t2.raiz)) t1 where t1.palabra ='" + palabra + "'");
+
+            rs = s.executeQuery("select tipo from db_compiladores.clasificacion_sustantivos where sustantivo = '" + sustantivo + "'");
+
+            // Se recorre el ResultSet, mostrando por pantalla los resultados.
+
+            while (rs.next()) {
+                p = rs.getString("tipo");
+            }
+
+            // Se cierra la conexión con la base de datos.
+            conexion.close();
+
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return p;
+
+    }
 }

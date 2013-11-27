@@ -61,6 +61,7 @@ public class MainCompilador extends javax.swing.JFrame {
         jRadioButtonPalabra = new javax.swing.JRadioButton();
         jRadioButtonOracion = new javax.swing.JRadioButton();
         jButton1 = new javax.swing.JButton();
+        jRadioButtonPregunta = new javax.swing.JRadioButton();
         jPanelContracciones = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTableContracciones = new javax.swing.JTable();
@@ -101,6 +102,14 @@ public class MainCompilador extends javax.swing.JFrame {
             }
         });
 
+        buttonGroup.add(jRadioButtonPregunta);
+        jRadioButtonPregunta.setText("Pregunta");
+        jRadioButtonPregunta.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jRadioButtonPreguntaActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -112,6 +121,8 @@ public class MainCompilador extends javax.swing.JFrame {
                 .addComponent(jRadioButtonPalabra)
                 .addGap(10, 10, 10)
                 .addComponent(jRadioButtonOracion)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jRadioButtonPregunta)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jButton1)
                 .addContainerGap())
@@ -124,7 +135,8 @@ public class MainCompilador extends javax.swing.JFrame {
                     .addComponent(jRadioButtonOracion)
                     .addComponent(jRadioButtonPalabra)
                     .addComponent(jLabel1)
-                    .addComponent(jButton1))
+                    .addComponent(jButton1)
+                    .addComponent(jRadioButtonPregunta))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -135,17 +147,17 @@ public class MainCompilador extends javax.swing.JFrame {
             .addGroup(jPanelCompiladorLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanelCompiladorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 469, Short.MAX_VALUE)
                     .addComponent(jScrollPane3, javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jPanel2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
+            .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 489, Short.MAX_VALUE)
         );
         jPanelCompiladorLayout.setVerticalGroup(
             jPanelCompiladorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanelCompiladorLayout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(6, 6, 6)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 132, Short.MAX_VALUE)
@@ -354,6 +366,30 @@ public class MainCompilador extends javax.swing.JFrame {
                 lexico.setSalida("");
                 jTextArea2.setForeground(Color.red);
             }
+        } else if (jRadioButtonPregunta.isSelected()) {
+
+            if (!lexico.vocabulario(cadena)) {
+                String arregloPalabras[] = lexico.arregloPalabras(cadena);
+                String arregloEstadosPalabra[] = new String[arregloPalabras.length];
+                for (int i = 0; i < arregloPalabras.length; i++) {
+                    arregloEstadosPalabra[i] = lexico.arregloEstadosPalabra(arregloPalabras[i]);
+                }
+                lexico.cargarContracciones();
+                if (!lexico.pregunta(arregloPalabras)) {
+                    jTextArea2.setText(lexico.salida);
+                    lexico.setSalida("");
+                    jTextArea2.setForeground(Color.GREEN);
+                } else {
+                    jTextArea2.setText(lexico.salida);
+                    lexico.setSalida("");
+                    jTextArea2.setForeground(Color.RED);
+                }
+
+            } else {
+                jTextArea2.setText(lexico.salida);
+                lexico.setSalida("");
+                jTextArea2.setForeground(Color.red);
+            }
         } else {
             jTextArea2.setText("Por favor seleccione un modo de compilación!!!");
             jTextArea2.setForeground(Color.red);
@@ -369,6 +405,10 @@ public class MainCompilador extends javax.swing.JFrame {
     private void jRadioButtonPalabraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButtonPalabraActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jRadioButtonPalabraActionPerformed
+
+    private void jRadioButtonPreguntaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButtonPreguntaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jRadioButtonPreguntaActionPerformed
 
     /**
      * @param args the command line arguments
@@ -419,6 +459,7 @@ public class MainCompilador extends javax.swing.JFrame {
     private javax.swing.JPanel jPanelContracciones;
     private javax.swing.JRadioButton jRadioButtonOracion;
     private javax.swing.JRadioButton jRadioButtonPalabra;
+    private javax.swing.JRadioButton jRadioButtonPregunta;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;

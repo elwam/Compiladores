@@ -223,7 +223,7 @@ public class Lexico {
                                             salida += "En el mundo establecido, la preposicion que une los sustantivos: " + oracion[1][0] + " y " + oracion[5][0] + " es: " + mundo.pragmatica2(oracion[1][0], oracion[5][0]) + "\n";
                                         } else {
                                             error = true;
-                                            salida += "Verifique la pragmatica de la oración, ya que la relación "+oracion[1][0]+" y "+oracion[5][0]+" no existe en el mundo\n";
+                                            salida += "Verifique la pragmatica de la oración, ya que la relación " + oracion[1][0] + " y " + oracion[5][0] + " no existe en el mundo\n";
                                         }
                                     }
                                 } else {
@@ -264,5 +264,45 @@ public class Lexico {
          }*/
         return error;
 
+    }
+
+    boolean pregunta(String arregloPalabras[]) {
+        boolean error = false;
+        String sus;
+
+        if (arregloPalabras.length > 5) {
+            switch (arregloPalabras[0]) {
+                case "que":
+                    sus = mundo.consultaP(arregloPalabras[2], arregloPalabras[3], arregloPalabras[5]);
+                    if (mundo.consultaTipo(sus).equals("cosa")) {
+                        salida += "Respuesta: " + sus + "\n";
+
+                    } else {
+                        salida += "Verifique la pregunta ya que la relacion no se encuentra en el mundo.\n";
+                        error = true;
+                    }
+                    break;
+                case "quien":
+                    sus = mundo.consultaP(arregloPalabras[2], arregloPalabras[3], arregloPalabras[5]);
+                    if (mundo.consultaTipo(sus).equals("persona")) {
+                        salida += "Respuesta: " + sus + "\n";
+                    } else {
+                        salida += "Verifique la pregunta ya que la relacion no se encuentra en el mundo.\n";
+                        error = true;
+                    }
+                    break;
+                default:
+                    salida += "Verifique la pregunta realizada.\n";
+                    break;
+            }
+        } else {
+            salida += "Verifique la pregunta realizada.\n";
+            error = true;
+        }
+
+
+
+
+        return error;
     }
 }
